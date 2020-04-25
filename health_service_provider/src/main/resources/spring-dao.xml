@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+							http://www.springframework.org/schema/context
+							http://www.springframework.org/schema/context/spring-context.xsd
+							http://www.springframework.org/schema/aop
+							http://www.springframework.org/schema/aop/spring-aop.xsd
+							http://www.springframework.org/schema/tx
+							http://www.springframework.org/schema/tx/spring-tx.xsd
+							http://www.springframework.org/schema/util
+							http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--数据源-->
+    <bean id="dataSource"
+          class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/health?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;allowMultiQueries=true&amp;useSSL=false" />
+    </bean>
+    <!--这里使用MP提供的sqlSessionFactory，完成了Spring与MP的整合-->
+    <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+       <!-- <property name="configLocation" value="classpath:mybatis-config.xml"/>-->
+        <!-- 自动扫描mapperxml文件 -->
+        <property name="mapperLocations" value="classpath:com/zhang/health/mapper/*.xml" />
+        <property name="configuration">
+            <bean class="com.baomidou.mybatisplus.core.MybatisConfiguration">
+                <!--开启下划线驼峰映射-->
+                <property name="mapUnderscoreToCamelCase" value="true"/>
+                <property name="logImpl" value="org.apache.ibatis.logging.stdout.StdOutImpl"/>
+            </bean>
+        </property>
+        <property name="globalConfig">
+            <bean class="com.baomidou.mybatisplus.core.config.GlobalConfig">
+                <property name="dbConfig">
+                    <bean class="com.baomidou.mybatisplus.core.config.GlobalConfig$DbConfig">
+                        <property name="idType" value="AUTO"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+        <property name="plugins">
+            <list>
+                <bean id="paginationInterceptor" class="com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor"/>
+            </list>
+        </property>
+    </bean>
+
+    <!--扫描mapper接口，使用的依然是Mybatis原生的扫描器-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.zhang.health.mapper"/>
+    </bean>
+</beans>
