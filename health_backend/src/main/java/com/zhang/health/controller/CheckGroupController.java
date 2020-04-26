@@ -3,13 +3,15 @@ package com.zhang.health.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhang.health.constant.MessageConstant;
-import com.zhang.health.entity.PageResult;
 import com.zhang.health.entity.QueryPageBean;
 import com.zhang.health.entity.Result;
 import com.zhang.health.pojo.CheckGroup;
 import com.zhang.health.service.CheckGroupService;
 import com.zhang.health.utils.PageUtils;
+import com.zhang.health.utils.QueryResultUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author zhang
@@ -27,13 +29,13 @@ public class CheckGroupController {
     /**
      * 新增检查组
      *
-     * @param checkitemIds 检查项ids
+     * @param checkItemIds 检查项ids
      * @param checkGroup   检查组操作参数
      * @return Result
      */
     @PostMapping("/add")
-    public Result add(Integer[] checkitemIds, @RequestBody CheckGroup checkGroup) {
-        checkGroupService.add(checkitemIds, checkGroup);
+    public Result add(Integer[] checkItemIds, @RequestBody CheckGroup checkGroup) {
+        checkGroupService.add(checkItemIds, checkGroup);
         return new Result(true, MessageConstant.ADD_CHECKGROUP_SUCCESS);
     }
 
@@ -59,13 +61,57 @@ public class CheckGroupController {
     public Result findPage(@RequestBody QueryPageBean queryPageBean) {
         QueryPageBean queryPageBean1 = PageUtils.checkPage(queryPageBean);
         Page<CheckGroup> checkGroupPage = checkGroupService.findPageByCondition(queryPageBean1);
-        if (checkGroupPage == null) {
-            return new Result(false, MessageConstant.NO_DATA);
-        }else{
-            PageResult<CheckGroup> pageResult =
-                    new PageResult<>(checkGroupPage.getTotal(), checkGroupPage.getRecords());
-            return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS, pageResult);
-        }
+        return QueryResultUtils.checkQueryPageResult(checkGroupPage);
     }
 
+
+    /**
+     * 根据id查询对应的检查项,用于编辑时的页面数据回显
+     *
+     * @param id 检查项id
+     * @return Result
+     */
+    @GetMapping("/findById")
+    public Result findById(Integer id) {
+        CheckGroup checkGroup = checkGroupService.findById(id);
+        return QueryResultUtils.checkQueryResult(checkGroup);
+    }
+
+
+    /**
+     * 根据检查组的id查询对应的检查项ids
+     *
+     * @param id 检查组id
+     * @return Result
+     */
+    @GetMapping("/findCheckItemIdsByCheckGroupId")
+    public Result findCheckItemIdsByCheckGroupId(Integer id) {
+        List<Integer> checkItemIds = checkGroupService.findCheckItemIdsByCheckGroupId(id);
+        return QueryResultUtils.checkQueryListResult(checkItemIds);
+    }
+
+    /**
+     * 编辑检查组
+     *
+     * @param checkItemIds 检查项id
+     * @param checkGroup   检查组操作参数
+     * @return Result
+     */
+    @PostMapping("/edit")
+    public Result edit(Integer[] checkItemIds, @RequestBody CheckGroup checkGroup) {
+        checkGroupService.edit(checkItemIds, checkGroup);
+        return new Result(true, MessageConstant.EDIT_CHECKGROUP_SUCCESS);
+    }
+
+
+    /**
+     * 添加检查套餐时,查询出所有的检查组
+     *
+     * @return Result
+     */
+    @GetMapping("/findAll")
+    public Result findAll() {
+        List<CheckGroup> checkGroupList = checkGroupService.findAll();
+        return QueryResultUtils.checkQueryListResult(checkGroupList);
+    }
 }

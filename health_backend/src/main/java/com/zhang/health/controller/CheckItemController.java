@@ -3,7 +3,6 @@ package com.zhang.health.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhang.health.constant.MessageConstant;
-import com.zhang.health.entity.PageResult;
 import com.zhang.health.entity.QueryPageBean;
 import com.zhang.health.entity.Result;
 import com.zhang.health.pojo.CheckItem;
@@ -48,13 +47,7 @@ public class CheckItemController {
         //对分页条件做健壮性判断
         QueryPageBean queryPageBeanCondition = PageUtils.checkPage(queryPageBean);
         Page<CheckItem> checkItemPage = checkItemService.findPageByCondition(queryPageBeanCondition);
-        if (checkItemPage == null) {
-            return new Result(false, MessageConstant.NO_DATA);
-        } else {
-            PageResult<CheckItem> checkItemPageResult =
-                    new PageResult<>(checkItemPage.getTotal(), checkItemPage.getRecords());
-            return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, checkItemPageResult);
-        }
+        return QueryResultUtils.checkQueryPageResult(checkItemPage);
     }
 
     /**
@@ -65,7 +58,7 @@ public class CheckItemController {
     @GetMapping("/findAll")
     public Result findAll() {
         List<CheckItem> checkItemList = checkItemService.findAll();
-        return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, checkItemList);
+        return QueryResultUtils.checkQueryListResult(checkItemList);
     }
 
     /**

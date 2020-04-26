@@ -4,12 +4,21 @@
 <mapper namespace="com.zhang.health.mapper.CheckGroupMapper">
 
 
-    <insert id="setRelation">
+    <insert id="setCheckItemsRelation">
         insert into t_checkgroup_checkitem values (#{checkGroupId},#{checkItemId})
     </insert>
 
 
-    <delete id="cancelRelation">
+    <delete id="cancelCheckItemsRelation">
         delete from t_checkgroup_checkitem where checkgroup_id = #{checkGroupId}
+    </delete>
+
+
+    <update id="setSetMealRelation">
+        insert into t_setmeal_checkgroup values (#{checkGroupId},#{setMealId})
+    </update>
+
+    <delete id="cancelSetMealRelation">
+        delete from t_setmeal_checkgroup where setmeal_id = #{setMealId}
     </delete>
 </mapper>

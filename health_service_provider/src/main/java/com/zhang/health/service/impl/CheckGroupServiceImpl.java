@@ -7,11 +7,10 @@ import com.zhang.health.entity.QueryPageBean;
 import com.zhang.health.mapper.CheckGroupMapper;
 import com.zhang.health.mapper.CheckItemMapper;
 import com.zhang.health.pojo.CheckGroup;
-import com.zhang.health.pojo.CheckItem;
 import com.zhang.health.service.CheckGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +33,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
      * @param checkGroup   检查组操作参数
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void add(Integer[] checkItemIds, CheckGroup checkGroup) {
         //保存检查组
         checkGroupMapper.insert(checkGroup);
@@ -42,7 +42,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         if (checkItemIds != null && checkItemIds.length > 0) {
             //向中间表中保存检查组和检查项的关系
             for (Integer checkItemId : checkItemIds) {
-                checkGroupMapper.setRelation(checkGroupId, checkItemId);
+                checkGroupMapper.setCheckItemsRelation(checkGroupId, checkItemId);
             }
         }
     }
@@ -54,10 +54,11 @@ public class CheckGroupServiceImpl implements CheckGroupService {
      * @param id 检查项id
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Integer id) {
         checkGroupMapper.deleteById(id);
         //解除这个检查组与所关联的检查项的关系
-        checkGroupMapper.cancelRelation(id);
+        checkGroupMapper.cancelCheckItemsRelation(id);
     }
 
 
@@ -79,10 +80,65 @@ public class CheckGroupServiceImpl implements CheckGroupService {
                     .or()
                     .like("name", queryString)
                     .or()
-                    .like("helpCode", queryString);
+                    .like("help_code", queryString);
         }
         return checkGroupMapper.selectPage(page, wrapper);
     }
 
 
+    /**
+     * 根据id查询对应的检查项,用于编辑时的页面数据回显
+     *
+     * @param id 检查组id
+     * @return CheckGroup
+     */
+    @Override
+    public CheckGroup findById(Integer id) {
+        return checkGroupMapper.selectById(id);
+    }
+
+
+    /**
+     * 根据检查组的id查询对应的检查项ids
+     *
+     * @param id 检查组id
+     * @return List<Integer>
+     */
+    @Override
+    public List<Integer> findCheckItemIdsByCheckGroupId(Integer id) {
+        return checkItemMapper.findCheckItemIdsByCheckGroupId(id);
+    }
+
+
+    /**
+     * 编辑检查组
+     *
+     * @param checkItemIds 检查项id
+     * @param checkGroup   检查组操作参数
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void edit(Integer[] checkItemIds, CheckGroup checkGroup) {
+        //1.更新检查组
+        checkGroupMapper.updateById(checkGroup);
+        //2.根据检查组id删除中间表中检查组和检查项的对应关系
+        checkGroupMapper.cancelCheckItemsRelation(checkGroup.getId());
+        //3.向中间表中重新存储最新的检查组和检查项的关系
+        if (checkItemIds != null && checkItemIds.length > 0) {
+            for (Integer checkItemId : checkItemIds) {
+                checkGroupMapper.setCheckItemsRelation(checkGroup.getId(), checkItemId);
+            }
+        }
+    }
+
+
+    /**
+     * 添加检查套餐时,查询出所有的检查组
+     *
+     * @return List<CheckGroup>
+     */
+    @Override
+    public List<CheckGroup> findAll() {
+        return checkGroupMapper.selectList(null);
+    }
 }

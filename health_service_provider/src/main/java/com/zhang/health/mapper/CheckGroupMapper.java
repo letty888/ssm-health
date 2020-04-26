@@ -18,7 +18,7 @@ public interface CheckGroupMapper extends BaseMapper<CheckGroup> {
      * @param checkGroupId 检查组id
      * @param checkItemId  检查项id
      */
-    void setRelation(@Param("checkGroupId") Integer checkGroupId, @Param("checkItemIds") Integer checkItemId);
+    void setCheckItemsRelation(@Param("checkGroupId") Integer checkGroupId, @Param("checkItemId") Integer checkItemId);
 
 
     /**
@@ -26,5 +26,23 @@ public interface CheckGroupMapper extends BaseMapper<CheckGroup> {
      *
      * @param checkGroupId 检查组id
      */
-    void cancelRelation(@Param("checkGroupId") Integer checkGroupId);
+    void cancelCheckItemsRelation(@Param("checkGroupId") Integer checkGroupId);
+
+
+    /**
+     * 向检查套餐,检查组的中间表中设置对应关系
+     *
+     * @param checkGroupId 检查组id
+     * @param setMealId    检查套餐id
+     */
+    void setSetMealRelation(@Param("checkGroupId") Integer checkGroupId, @Param("setMealId") Integer setMealId);
+
+
+    /**
+     * 解除套餐和检查组的关系
+     * 检查套餐id
+     *
+     * @param setMealId
+     */
+    void cancelSetMealRelation(@Param("setMealId") Integer setMealId);
 }
