@@ -22,6 +22,7 @@ public class MessageConstant {
     public static final String QUERY_CHECKGROUP_FAIL = "查询检查组失败";
     public static final String EDIT_CHECKGROUP_FAIL = "编辑检查组失败";
     public static final String EDIT_CHECKGROUP_SUCCESS = "编辑检查组成功";
+    public static final String EDIT_SETMEAL_SUCCESS = "编辑检查套餐成功";
     public static final String PIC_UPLOAD_SUCCESS = "图片上传成功";
     public static final String PIC_UPLOAD_FAIL = "图片上传失败";
     public static final String PIC_FORMAT_ERROR = "请上传正确格式的图片";

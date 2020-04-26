@@ -14,7 +14,10 @@ import com.zhang.health.pojo.SetMeal;
 import com.zhang.health.service.SetMealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * @author zhang
@@ -39,7 +42,7 @@ public class SetMealServiceImpl implements SetMealService {
      * @param setMeal       检查套餐操作参数
      */
     @Override
-
+    @Transactional(rollbackFor = Exception.class)
     public void add(Integer[] checkGroupIds, SetMeal setMeal) {
         //保存检查套餐
         setMealMapper.insert(setMeal);
@@ -85,9 +88,54 @@ public class SetMealServiceImpl implements SetMealService {
      * @param id 套餐id
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Integer id) {
         setMealMapper.deleteById(id);
         //解除套餐和检查组的关系
         checkGroupMapper.cancelSetMealRelation(id);
+    }
+
+
+    /**
+     * 根据检查套餐id查询对应的检查套餐
+     *
+     * @param id 检查套餐id
+     * @return SetMeal
+     */
+    @Override
+    public SetMeal findById(Integer id) {
+        return setMealMapper.selectById(id);
+    }
+
+
+    /**
+     * 根据检查套餐id查询所关联的检查组的ids
+     *
+     * @param id 检查套餐id
+     * @return List<Integer>
+     */
+    @Override
+    public List<Integer> findCheckGroupIdsBySetMealId(Integer id) {
+        return setMealMapper.findCheckGroupIdsBySetMealId(id);
+    }
+
+
+    /**
+     * 更新检查套餐
+     *
+     * @param checkGroupIds 与检查套餐关联的所有检查组的id
+     * @param setMeal       检查套餐操作参数
+     */
+    @Override
+    public void edit(Integer[] checkGroupIds, SetMeal setMeal) {
+        setMealMapper.updateById(setMeal);
+        //删除原有的检查套餐和检查组的对应关系
+        checkGroupMapper.cancelSetMealRelation(setMeal.getId());
+        if (checkGroupIds != null && checkGroupIds.length > 0) {
+            for (Integer checkGroupId : checkGroupIds) {
+                //添加新的对应关系
+                checkGroupMapper.setSetMealRelation(checkGroupId, setMeal.getId());
+            }
+        }
     }
 }

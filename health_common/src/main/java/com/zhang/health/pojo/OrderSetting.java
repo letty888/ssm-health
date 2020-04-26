@@ -1,54 +1,38 @@
 package com.zhang.health.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.zhang.health.annotation.ExcelAttribute;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 预约设置
+ *
+ * @author zhang
  */
-public class OrderSetting implements Serializable{
-    private Integer id ;
-    private Date orderDate;//预约设置日期
-    private int number;//可预约人数
-    private int reservations ;//已预约人数
+@Data
+@TableName("t_ordersetting")
+public class OrderSetting implements Serializable {
 
-    public OrderSetting() {
-    }
+    private static final long serialVersionUID = -2556017188233745323L;
+    private Integer id;
 
-    public OrderSetting(Date orderDate, int number) {
-        this.orderDate = orderDate;
-        this.number = number;
-    }
+    /**
+     * 预约设置日期
+     */
+    @ExcelAttribute(sort = 0)
+    private Date orderDate;
 
-    public Integer getId() {
-        return id;
-    }
+    /**
+     * 可预约人数
+     */
+    @ExcelAttribute(sort = 1)
+    private Integer number;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public int getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(int reservations) {
-        this.reservations = reservations;
-    }
+    /**
+     * 已预约人数
+     */
+    private Integer reservations;
 }

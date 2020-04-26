@@ -11,11 +11,11 @@ import com.zhang.health.service.SetMealService;
 import com.zhang.health.utils.PageUtils;
 import com.zhang.health.utils.QiNiuUtils;
 import com.zhang.health.utils.QueryResultUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -29,8 +29,11 @@ public class SetMealController {
 
     @Reference
     private SetMealService setMealService;
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
+
+    public SetMealController(RedisTemplate<String, String> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     /**
      * 图片上传
@@ -94,4 +97,42 @@ public class SetMealController {
         setMealService.delete(id);
         return new Result(true, MessageConstant.DELETE_SETMEAL_SUCCESS);
     }
+
+    /**
+     * 根据检查套餐id查询对应的检查套餐
+     *
+     * @param id 检查套餐id
+     * @return Result
+     */
+    @GetMapping("/findById")
+    public Result findById(Integer id) {
+        SetMeal setMeal = setMealService.findById(id);
+        return QueryResultUtils.checkQueryResult(setMeal);
+    }
+
+    /**
+     * 根据检查套餐id查询所关联的检查组的ids
+     *
+     * @param id 检查套餐id
+     * @return Result
+     */
+    @GetMapping("/findCheckGroupIdsBySetMealId")
+    public Result findCheckGroupIdsBySetMealId(Integer id) {
+        List<Integer> checkGroupIds = setMealService.findCheckGroupIdsBySetMealId(id);
+        return QueryResultUtils.checkQueryListResult(checkGroupIds);
+    }
+
+    /**
+     * 更新检查套餐
+     *
+     * @param checkGroupIds 与检查套餐关联的所有检查组id
+     * @param setMeal       检查套餐操作参数
+     * @return Result
+     */
+    @PostMapping("/edit")
+    public Result edit(Integer[] checkGroupIds, @RequestBody SetMeal setMeal) {
+        setMealService.edit(checkGroupIds, setMeal);
+        return new Result(true, MessageConstant.EDIT_SETMEAL_SUCCESS);
+    }
+
 }

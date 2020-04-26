@@ -15,7 +15,7 @@
 
 
     <update id="setSetMealRelation">
-        insert into t_setmeal_checkgroup values (#{checkGroupId},#{setMealId})
+        insert into t_setmeal_checkgroup values (#{setMealId},#{checkGroupId})
     </update>
 
     <delete id="cancelSetMealRelation">
