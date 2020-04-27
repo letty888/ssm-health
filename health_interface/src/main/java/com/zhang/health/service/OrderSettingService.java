@@ -24,7 +24,15 @@ public interface OrderSettingService {
      * 根据月份查询该月中每个日期对应的orderSetting对象
      *
      * @param date 2019-03
-     * @return List<Map < String, Integer>>
+     * @return List<Map < String, Object>>
      */
-    List<Map<String, Integer>> getOrderSettingByMonth(String date);
+    List<Map<String, Object>> getOrderSettingByMonth(String date);
+
+
+    /**
+     * 根据预约日期修改可预约人数
+     *
+     * @param orderSetting 预约参数
+     */
+    void editNumberByDate(OrderSetting orderSetting);
 }

@@ -1,11 +1,14 @@
 package com.zhang.health.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.*;
 
 /**
  * 菜单
  */
+@TableName("t_menu")
 public class Menu implements Serializable{
     private Integer id;
     private String name; // 菜单名称

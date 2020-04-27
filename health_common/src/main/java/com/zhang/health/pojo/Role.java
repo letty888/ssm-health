@@ -1,5 +1,7 @@
 package com.zhang.health.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -8,6 +10,7 @@ import java.util.Set;
 /**
  * 角色
  */
+@TableName("t_role")
 public class Role implements Serializable {
     private Integer id;
     private String name; // 角色名称

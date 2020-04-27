@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhang.health.mapper.OrderMapper">
+
+    <select id="selectOrderInfoById" resultType="com.zhang.health.queryResult.OrderInfo">
+        SELECT
+            t2.id_card idCard,
+            t2.phone_number phoneNumber,
+            t3.`name` setMealName,
+            t2.`name` memberName,
+            t1.order_date orderDate,
+            t1.order_type orderType
+        FROM
+            `t_order` t1
+        left join
+            t_member t2
+        on
+            t2.id=t1.member_id
+        LEFT JOIN
+            t_setmeal t3
+        on
+            t3.id = t1.setmeal_id
+        where t1.id = #{orderId};
+    </select>
+</mapper>

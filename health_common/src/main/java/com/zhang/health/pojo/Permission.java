@@ -1,5 +1,7 @@
 package com.zhang.health.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,6 +9,7 @@ import java.util.Set;
 /**
  * 权限
  */
+@TableName("t_permission")
 public class Permission implements Serializable{
     private Integer id;
     private String name; // 权限名称

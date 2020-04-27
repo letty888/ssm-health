@@ -1,5 +1,7 @@
 package com.zhang.health.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -8,6 +10,7 @@ import java.util.Set;
 /**
  * 用户
  */
+@TableName("t_user")
 public class User implements Serializable{
     private Integer id; // 主键
     private Date birthday; // 生日

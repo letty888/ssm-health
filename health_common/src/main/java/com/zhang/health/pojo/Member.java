@@ -1,11 +1,14 @@
 package com.zhang.health.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 会员
  */
+@TableName("t_member")
 public class Member implements Serializable{
     private Integer id;//主键
     private String fileNumber;//档案号

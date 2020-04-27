@@ -65,4 +65,12 @@ public interface SetMealService {
      * @param setMeal       检查套餐操作参数
      */
     void edit(Integer[] checkGroupIds, SetMeal setMeal);
+
+
+    /**
+     * 查詢所有体检套餐
+     *
+     * @return List<SetMeal>
+     */
+    List<SetMeal> findAll();
 }

@@ -23,4 +23,13 @@ public interface SetMealMapper extends BaseMapper<SetMeal> {
      * @return List<Integer>
      */
     List<Integer> findCheckGroupIdsBySetMealId(@Param("setMealId") Integer setMealId);
+
+
+    /**
+     * 根据套餐id查询套餐详情(包括检查组和检查项)
+     *
+     * @param setMealId 套餐id
+     * @return SetMeal
+     */
+    SetMeal findById(@Param("setMealId") Integer setMealId);
 }

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -9,6 +10,7 @@
         <module name="health_interface" />
         <module name="health_backend" />
         <module name="health_common" />
+        <module name="health_mobile" />
         <module name="health_service_provider" />
       </profile>
     </annotationProcessing>
@@ -17,6 +19,7 @@
       <module name="health_common" target="1.8" />
       <module name="health_interface" target="1.8" />
       <module name="health_jobs" target="1.8" />
+      <module name="health_mobile" target="1.8" />
       <module name="health_parent" target="1.8" />
       <module name="health_service_provider" target="1.8" />
     </bytecodeTargetLevel>

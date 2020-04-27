@@ -2,9 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhang.health.mapper.SetMealMapper">
-
-
+    <resultMap id="myMap" type="com.zhang.health.pojo.SetMeal">
+        <id property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="helpCode" column="helpCode"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+        <result property="price" column="price"/>
+        <result property="remark" column="remark"/>
+        <result property="attention" column="attention"/>
+        <result property="img" column="img"/>
+    </resultMap>
+    <resultMap id="mySetMealMap2" type="com.zhang.health.pojo.SetMeal" extends="myMap">
+        <!--检查组 -->
+        <collection property="checkGroups" ofType="com.zhang.health.pojo.CheckGroup">
+            <id column="checkGroupId" property="id"/>
+            <result column="checkGroupName" property="name"/>
+            <result column="checkGroupRemark" property="remark"/>
+            <!--检查项-->
+            <collection property="checkItems" ofType="com.zhang.health.pojo.CheckItem">
+                <id column="checkItemId" property="id"/>
+                <result column="checkItemName" property="name"/>
+            </collection>
+        </collection>
+    </resultMap>
     <select id="findCheckGroupIdsBySetMealId" resultType="java.lang.Integer">
         SELECT checkgroup_id FROM `t_setmeal_checkgroup` where setmeal_id = #{setMealId};
+    </select>
+    <select id="findById" resultMap="mySetMealMap2">
+        select
+            ts.*,
+            tcg.id checkgroupId,
+            tcg.`name` checkGroupName,
+            tcg.remark checkGroupRemark,
+            tci.id checkItemId,
+            tci.`name` checkItemName
+        from
+            t_setmeal ts
+        left join
+            t_setmeal_checkgroup tsc on ts.id =  tsc.setmeal_id
+        left join
+            t_checkgroup tcg on tsc.checkgroup_id = tcg.id
+        left join
+            t_checkgroup_checkitem tcc on tcc.checkgroup_id = tcg.id
+        left join
+            t_checkitem tci on tcc.checkitem_id = tci.id
+        where ts.id = #{setMealId};
     </select>
 </mapper>

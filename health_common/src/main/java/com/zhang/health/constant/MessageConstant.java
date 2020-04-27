@@ -22,6 +22,7 @@ public class MessageConstant {
     public static final String QUERY_CHECKGROUP_FAIL = "查询检查组失败";
     public static final String EDIT_CHECKGROUP_FAIL = "编辑检查组失败";
     public static final String EDIT_CHECKGROUP_SUCCESS = "编辑检查组成功";
+    public static final String EDIT_ORDERSETTING_NUMBER_SUCCESS = "修改可预约人数成功";
     public static final String EDIT_SETMEAL_SUCCESS = "编辑检查套餐成功";
     public static final String PIC_UPLOAD_SUCCESS = "图片上传成功";
     public static final String PIC_UPLOAD_FAIL = "图片上传失败";
@@ -43,6 +44,7 @@ public class MessageConstant {
     public static final String EDIT_MEMBER_SUCCESS = "编辑会员成功";
     public static final String TELEPHONE_VALIDATECODE_NOTNULL = "手机号和验证码都不能为空";
     public static final String LOGIN_SUCCESS = "登录成功";
+    public static final String LOGIN_FAIL = "登录失败";
     public static final String VALIDATECODE_ERROR = "验证码输入错误";
     public static final String QUERY_ORDER_SUCCESS = "查询预约信息成功";
     public static final String QUERY_ORDER_FAIL = "查询预约信息失败";
@@ -53,9 +55,10 @@ public class MessageConstant {
     public static final String SEND_VALIDATECODE_FAIL = "验证码发送失败";
     public static final String SEND_VALIDATECODE_SUCCESS = "验证码发送成功";
     public static final String SELECTED_DATE_CANNOT_ORDER = "所选日期不能进行体检预约";
-    public static final String ORDER_FULL = "预约已满";
+    public static final String ORDER_FULL = "该日期预约已满";
     public static final String HAS_ORDERED = "已经完成预约，不能重复预约";
     public static final String ORDER_SUCCESS = "预约成功";
+    public static final String ORDER_FAIL = "预约失败";
     public static final String GET_USERNAME_SUCCESS = "获取当前登录用户名称成功";
     public static final String GET_USERNAME_FAIL = "获取当前登录用户名称失败";
     public static final String GET_MENU_SUCCESS = "获取当前登录用户菜单成功";

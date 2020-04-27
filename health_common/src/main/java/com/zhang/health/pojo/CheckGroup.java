@@ -64,4 +64,5 @@ public class CheckGroup implements Serializable {
     @TableField(select = false)
     private List<CheckItem> checkItems;
 
+
 }

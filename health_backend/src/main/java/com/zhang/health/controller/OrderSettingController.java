@@ -7,10 +7,7 @@ import com.zhang.health.pojo.OrderSetting;
 import com.zhang.health.service.OrderSettingService;
 import com.zhang.health.utils.ExcelImportUtil;
 import com.zhang.health.utils.QueryResultUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -56,7 +53,20 @@ public class OrderSettingController {
      */
     @PostMapping("/getOrderSettingByMonth")
     public Result getOrderSettingByMonth(String date) {
-        List<Map<String, Integer>> list = orderSettingService.getOrderSettingByMonth(date);
+        List<Map<String, Object>> list = orderSettingService.getOrderSettingByMonth(date);
         return QueryResultUtils.checkQueryListResult(list);
+    }
+
+
+    /**
+     * 根据预约日期修改可预约人数
+     *
+     * @param orderSetting 预约参数
+     * @return Result
+     */
+    @PostMapping("/editNumberByDate")
+    public Result editNumberByDate(@RequestBody OrderSetting orderSetting) {
+        orderSettingService.editNumberByDate(orderSetting);
+        return new Result(true, MessageConstant.EDIT_ORDERSETTING_NUMBER_SUCCESS);
     }
 }

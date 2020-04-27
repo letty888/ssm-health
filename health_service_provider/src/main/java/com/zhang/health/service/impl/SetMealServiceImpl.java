@@ -104,7 +104,7 @@ public class SetMealServiceImpl implements SetMealService {
      */
     @Override
     public SetMeal findById(Integer id) {
-        return setMealMapper.selectById(id);
+        return setMealMapper.findById(id);
     }
 
 
@@ -127,6 +127,7 @@ public class SetMealServiceImpl implements SetMealService {
      * @param setMeal       检查套餐操作参数
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void edit(Integer[] checkGroupIds, SetMeal setMeal) {
         setMealMapper.updateById(setMeal);
         //删除原有的检查套餐和检查组的对应关系
@@ -137,5 +138,16 @@ public class SetMealServiceImpl implements SetMealService {
                 checkGroupMapper.setSetMealRelation(checkGroupId, setMeal.getId());
             }
         }
+    }
+
+
+    /**
+     * 查詢所有体检套餐
+     *
+     * @return List<SetMeal>
+     */
+    @Override
+    public List<SetMeal> findAll() {
+        return setMealMapper.selectList(null);
     }
 }
