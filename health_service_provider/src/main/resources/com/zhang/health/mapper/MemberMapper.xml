@@ -4,4 +4,19 @@
 <mapper namespace="com.zhang.health.mapper.MemberMapper">
 
 
+    <select id="findTodayNewMemberCount" resultType="java.lang.Integer">
+        select count(*) from t_member where reg_time = #{reportDate};
+    </select>
+
+    <select id="findTodayTotalMemberCount" resultType="java.lang.Integer">
+        select count(*) from t_member where <![CDATA[ reg_time <= #{reportDate} ]]>;
+    </select>
+
+    <select id="findThisWeekNewMember" resultType="java.lang.Integer">
+        select count(*) from t_member where reg_time between #{firstDayOfWeekString} and #{reportDate};
+    </select>
+
+    <select id="findThisMonthMemberCount" resultType="java.lang.Integer">
+        select count(*) from t_member where reg_time between #{firstDay4ThisMonthString} and #{reportDate};
+    </select>
 </mapper>

@@ -50,4 +50,38 @@
             t_checkitem tci on tcc.checkitem_id = tci.id
         where ts.id = #{setMealId};
     </select>
+
+    <select id="findName" resultType="java.lang.String">
+        SELECT
+            t_setmeal.`name`
+        FROM
+            t_setmeal ;
+    </select>
+
+    <select id="findCountByName" resultType="java.lang.Integer">
+        SELECT
+            count(*)
+        FROM
+            t_order
+        where
+            t_order.setmeal_id = (select t_setmeal.id from t_setmeal where t_setmeal.`name` = #{setMealName});
+    </select>
+
+
+    <select id="findHotSetmeal" resultType="java.util.Map">
+    SELECT
+        s.name,
+        s.remark,
+        count( o.id ) setmeal_count,
+        count( o.id )/( SELECT count( id ) FROM t_order ) proportion
+    FROM
+	    t_order o
+	INNER JOIN
+	    t_setmeal s ON s.id = o.setmeal_id
+    GROUP BY
+	    o.setmeal_id
+    ORDER BY
+	    setmeal_count DESC
+	LIMIT 0,4;
+    </select>
 </mapper>

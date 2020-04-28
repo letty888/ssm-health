@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
         String orderDate = map.get("orderDate");
         String param = redisTemplate.opsForValue().get(RedisKeyConstant.ORDER_USER_VALIDATE_CODE + telephone);
         if (telephone == null || validateCode == null || orderDate == null || !validateCode.equalsIgnoreCase(param)) {
-            return new Result(false, MessageConstant.ORDER_FAIL);
+            return new Result(false, MessageConstant.ORDER_PHONE_OR_CODE_FAIL);
         }
         //1.判断用户预约的日期是否已经设置可预约
         QueryWrapper<OrderSetting> queryWrapper1 = new QueryWrapper<>();

@@ -7,6 +7,7 @@ import com.zhang.health.entity.Result;
 import com.zhang.health.pojo.CheckGroup;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhang
@@ -27,7 +28,7 @@ public class QueryResultUtils {
         if (t == null) {
             return new Result(false, MessageConstant.NO_DATA);
         }
-        return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, t);
+        return new Result(true, MessageConstant.QUERY_SUCCESS, t);
     }
 
 
@@ -40,7 +41,7 @@ public class QueryResultUtils {
      */
     public static <T> Result checkQueryListResult(List<T> list) {
         if (list != null && list.size() > 0) {
-            return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, list);
+            return new Result(true, MessageConstant.QUERY_SUCCESS, list);
         }
         return new Result(false, MessageConstant.NO_DATA);
     }
@@ -56,7 +57,20 @@ public class QueryResultUtils {
         if (page != null && page.getTotal() > 0) {
             PageResult<T> pageResult =
                     new PageResult<>(page.getTotal(), page.getRecords());
-            return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS, pageResult);
+            return new Result(true, MessageConstant.QUERY_SUCCESS, pageResult);
+        }
+        return new Result(false, MessageConstant.NO_DATA);
+    }
+
+    /**
+     * 判断查询出来的map对象是否为空
+     *
+     * @param map 查询出来的map对象
+     * @return Result
+     */
+    public static Result checkQueryMapResult(Map<String, Object> map) {
+        if (map != null && map.size() > 0) {
+            return new Result(true, MessageConstant.QUERY_SUCCESS, map);
         }
         return new Result(false, MessageConstant.NO_DATA);
     }

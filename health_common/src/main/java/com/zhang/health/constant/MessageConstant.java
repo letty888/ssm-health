@@ -59,6 +59,7 @@ public class MessageConstant {
     public static final String HAS_ORDERED = "已经完成预约，不能重复预约";
     public static final String ORDER_SUCCESS = "预约成功";
     public static final String ORDER_FAIL = "预约失败";
+    public static final String ORDER_PHONE_OR_CODE_FAIL = "手机号为空或验证码错误";
     public static final String GET_USERNAME_SUCCESS = "获取当前登录用户名称成功";
     public static final String GET_USERNAME_FAIL = "获取当前登录用户名称失败";
     public static final String GET_MENU_SUCCESS = "获取当前登录用户菜单成功";
@@ -72,4 +73,7 @@ public class MessageConstant {
     public static final String GET_SETMEAL_LIST_SUCCESS = "查询套餐列表数据成功";
     public static final String GET_SETMEAL_LIST_FAIL = "查询套餐列表数据失败";
     public static final String OPERATION_EXCEPTION = "系统正在打盹,请稍后重试...";
+    public static final String HAS_NO_PERMISSION = "对不起,你没有进行此操作的权限";
+    public static final String LOGIN_EXCEPTION = "用户名或密码错误";
+    public static final String QUERY_SUCCESS = "查询成功";
 }

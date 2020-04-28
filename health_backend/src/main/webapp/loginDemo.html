@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>传智健康</title>
+    <meta name="description" content="传智健康">
+    <meta name="keywords" content="传智健康">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="plugins/elementui/index.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="hold-transition skin-purple sidebar-mini">
+<div id="app">
+    <div class="login-container">
+        <div class="loginBox">
+            <!-- <form method="post" class="login-form" action="/login.do" label-position="left">-->
+            <form id='login-form'>
+                <div class="title-container">
+                    <div class="logoInfo clearfix">
+                        <em class="logo"></em>
+                    </div>
+                </div>
+                <!--<div>
+                  <span class="svg-container svg-container_login">
+                    <span class="user"></span>
+                  </span>
+                  <input type="text" name="username" placeholder="请输入用户名" />
+                </div>-->
+                <div>
+                    <div class="loginInput">
+                        <input v-model="username" style="width:40%" id='account' type="text"
+                               placeholder="请输入用户名">
+                    </div>
+                </div>
+                <div>
+                    <div class="loginInput">
+                        <input v-model="password" style="width:40%" id='password' type="password"
+                               placeholder="请输入密码">
+                    </div>
+                </div>
+                <!-- <div>
+                   <span class="svg-container">
+                     <span class="username"></span>
+                   </span>
+                   <input type="password" name="password" placeholder="请输入密码"/>
+                 </div>-->
+                <!--<input type="submit" style="width:100%;margin-bottom:30px;" value="登录"></input>-->
+                <div class="btn yes-btn" style="width:100%;margin-bottom:30px;"><a @click="login()" href="#">登录</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<!-- 引入组件库 -->
+<script src="js/vue.js"></script>
+<script src="plugins/elementui/index.js"></script>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script src="/js/axios-0.18.0.js"></script>
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            loginInfo: {},//登录信息
+            username:"",
+            password:""
+        },
+        methods: {
+            login(){
+                alert("123");
+                var param = {
+                    username: this.username,
+                    password: this.password,
+                };
+                axios.post("/login.do",this.loginInfo).then((response) => {
+                    if(!response.data.flag){
+                        //失败，提示失败信息
+                        this.$message.error(response.data.message);
+                    }
+                });
+            }
+        }
+    })
+</script>
+</html>

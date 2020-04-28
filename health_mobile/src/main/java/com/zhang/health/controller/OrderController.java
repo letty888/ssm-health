@@ -36,18 +36,20 @@ public class OrderController {
      */
     @PostMapping("/submit")
     public Result submit(@RequestBody Map<String, String> map) {
+        Result submitResult = null;
         if (map.size() > 0) {
             //获取用户选择的预约日期
             String orderDate = map.get("orderDate");
-            Result submitResult = orderService.submit(map);
+            submitResult = orderService.submit(map);
             //如果预约成功则发送短信提醒用户预约日期
             if (submitResult.isFlag()) {
                 SendMessageUtils
                         .sendMessage(SendMessageUtils.NOTICE_TEMPLATE_CODE, map.get("telephone"), SendMessageUtils.DATE_STYLE, orderDate);
-                return new Result(true, MessageConstant.ORDER_SUCCESS,submitResult.getData());
+                return new Result(true, MessageConstant.ORDER_SUCCESS, submitResult.getData());
             }
         }
-        return new Result(false, MessageConstant.ORDER_FAIL);
+        assert submitResult != null;
+        return new Result(false, submitResult.getMessage());
     }
 
 

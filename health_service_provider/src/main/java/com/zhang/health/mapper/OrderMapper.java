@@ -22,4 +22,56 @@ public interface OrderMapper extends BaseMapper<Order> {
      * @return OrderInfo
      */
     OrderInfo selectOrderInfoById(@Param("orderId") Integer orderId);
+
+    /**
+     * 查询今日新增会员数
+     *
+     * @param reportDate 当前日期
+     * @return Integer 今日新增会员数
+     */
+    Integer findTodayOrderNumber(@Param("reportDate") String reportDate);
+
+    /**
+     * 查询今日到诊数
+     *
+     * @param reportDate 当前日期
+     * @return 今日到诊数
+     */
+    Integer findTodayVisitsNumber(@Param("reportDate") String reportDate);
+
+    /**
+     * 查询本周预约数
+     *
+     * @param firstDayOfWeekString 当前日期所在周的第一天
+     * @param reportDate           当前日期
+     * @return 本周预约数
+     */
+    Integer findThisWeekOrderNumber(@Param("firstDayOfWeekString") String firstDayOfWeekString, @Param("reportDate") String reportDate);
+
+    /**
+     * 查询本周到诊数
+     *
+     * @param firstDayOfWeekString 当前日期所在周的第一天
+     * @param reportDate           当前日期
+     * @return 本周到诊数
+     */
+    Integer findThisWeekVisitsNumber(@Param("firstDayOfWeekString") String firstDayOfWeekString, @Param("reportDate") String reportDate);
+
+    /**
+     * 查询本月预约数
+     *
+     * @param firstDay4ThisMonthString 本月第一天
+     * @param reportDate               当前日期
+     * @return 本月预约数
+     */
+    Integer findThisMonthOrderNumber(@Param("firstDay4ThisMonthString") String firstDay4ThisMonthString, @Param("reportDate") String reportDate);
+
+    /**
+     * 查询本月到诊数
+     *
+     * @param firstDay4ThisMonthString 本月第一天
+     * @param reportDate               当前日期
+     * @return 本月到诊数
+     */
+    Integer findThisMonthVisitsNumber(@Param("firstDay4ThisMonthString") String firstDay4ThisMonthString, @Param("reportDate") String reportDate);
 }

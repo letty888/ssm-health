@@ -23,4 +23,30 @@
             t3.id = t1.setmeal_id
         where t1.id = #{orderId};
     </select>
+
+    <select id="findTodayOrderNumber" resultType="java.lang.Integer">
+        select count(*) from t_order where order_date = #{reportDate};
+    </select>
+
+    <select id="findTodayVisitsNumber" resultType="java.lang.Integer">
+        select count(*) from t_order where order_date = #{reportDate} and order_status = "已到诊";
+    </select>
+
+    <select id="findThisWeekOrderNumber" resultType="java.lang.Integer">
+        select count(*) from t_order where order_date between #{firstDayOfWeekString} and #{reportDate}  ;
+    </select>
+
+    <select id="findThisWeekVisitsNumber" resultType="java.lang.Integer">
+        select count(*) from t_order where order_status = "已到诊" and  #{firstDayOfWeekString} &lt;= order_date &lt;= #{reportDate};
+    </select>
+
+    <select id="findThisMonthOrderNumber" resultType="java.lang.Integer">
+        select count(*) from t_order where order_date between #{firstDay4ThisMonthString} and #{reportDate} ;
+    </select>
+
+    <select id="findThisMonthVisitsNumber" resultType="java.lang.Integer">
+        select count(*) from t_order where order_status = "已到诊" and  #{firstDay4ThisMonthString} &lt;= order_date &lt;= #{reportDate};
+    </select>
+
+
 </mapper>

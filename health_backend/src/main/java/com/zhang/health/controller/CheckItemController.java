@@ -9,6 +9,7 @@ import com.zhang.health.pojo.CheckItem;
 import com.zhang.health.service.CheckItemService;
 import com.zhang.health.utils.PageUtils;
 import com.zhang.health.utils.QueryResultUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class CheckItemController {
      * @param checkItem 检查项参数
      */
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('CHECKITEM_ADD')")
     public Result add(@RequestBody CheckItem checkItem) {
         checkItemService.add(checkItem);
         return new Result(true, MessageConstant.ADD_CHECKITEM_SUCCESS);
@@ -81,6 +83,7 @@ public class CheckItemController {
      * @return Result
      */
     @PostMapping("/edit")
+    @PreAuthorize("hasAuthority('CHECKITEM_EDIT')")
     public Result edit(@RequestBody CheckItem checkItem) {
         checkItemService.edit(checkItem);
         return new Result(true, MessageConstant.EDIT_CHECKITEM_SUCCESS);
@@ -94,8 +97,10 @@ public class CheckItemController {
      * @return Result
      */
     @GetMapping("/delete")
+    @PreAuthorize("hasAuthority('CHECKITEM_DELETE')")//权限校验
     public Result delete(Integer id) {
         checkItemService.deleteById(id);
+        int i = 1/0;
         return new Result(true, MessageConstant.DELETE_CHECKITEM_SUCCESS);
     }
 }

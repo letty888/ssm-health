@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhang.health.mapper.RoleMapper">
+
+
+    <select id="findRoleSetByUserId" resultType="com.zhang.health.pojo.Role">
+        SELECT
+            *
+        FROM
+            `t_role` tr
+         where
+            tr.id in (select role_id from t_user_role tur where tur.user_id = #{userId});
+    </select>
+</mapper>

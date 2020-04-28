@@ -1,6 +1,8 @@
 package com.zhang.health.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,88 +11,57 @@ import java.util.Set;
 
 /**
  * 用户
+ *
+ * @author zhang
  */
+@Data
 @TableName("t_user")
-public class User implements Serializable{
-    private Integer id; // 主键
-    private Date birthday; // 生日
-    private String gender; // 性别
-    private String username; // 用户名，唯一
-    private String password; // 密码
-    private String remark; // 备注
-    private String station; // 状态
-    private String telephone; // 联系电话
-    private Set<Role> roles = new HashSet<Role>(0);//对应角色集合
+public class User implements Serializable {
 
-    public Integer getId() {
-        return id;
-    }
+    private static final long serialVersionUID = 4828989941614138406L;
+    /**
+     * 主键
+     */
+    private Integer id;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    /**
+     * 生日
+     */
+    private Date birthday;
 
-    public Date getBirthday() {
-        return birthday;
-    }
+    /**
+     *  性别
+     */
+    private String gender;
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
+    /**
+     * 用户名，唯一
+     */
+    private String username;
 
-    public String getGender() {
-        return gender;
-    }
+    /**
+     * 密码
+     */
+    private String password;
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+    /**
+     * 备注
+     */
+    private String remark;
 
-    public String getUsername() {
-        return username;
-    }
+    /**
+     * 状态
+     */
+    private String station;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    /**
+     * 联系电话
+     */
+    private String telephone;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getStation() {
-        return station;
-    }
-
-    public void setStation(String station) {
-        this.station = station;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+    /**
+     * 对应角色集合
+     */
+    @TableField(select = false)
+    private Set<Role> roles = new HashSet<Role>(0);
 }

@@ -6,6 +6,7 @@ import com.zhang.health.pojo.SetMeal;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -32,4 +33,28 @@ public interface SetMealMapper extends BaseMapper<SetMeal> {
      * @return SetMeal
      */
     SetMeal findById(@Param("setMealId") Integer setMealId);
+
+
+    /**
+     * 查询所有套餐名称
+     *
+     * @return List<String>
+     */
+    List<String> findName();
+
+
+    /**
+     * 根据套餐名称去成功预约的表中查询对应套餐的预约数量
+     *
+     * @param setMealName 套餐名称
+     * @return Integer
+     */
+    Integer findCountByName(@Param("setMealName") String setMealName);
+
+    /**
+     * 查询当前热门套餐
+     *
+     * @return List<Map<String,Object>>
+     */
+    List<Map<String,Object>> findHotSetmeal();
 }
