@@ -25,22 +25,22 @@ public class SendMessageUtils {
     /**
      * ACCESS_KEY_ID
      */
-    private final static String ACCESS_KEY_ID = "LTAI4FmFyKXJJgBhKiXa3Cdr";
+    private final static String ACCESS_KEY_ID = "";
 
     /**
      * SECRET
      */
-    private final static String SECRET = "lqLbGYRNhDxfUIijsc6fOcsGxxPnxK";
+    private final static String SECRET = "";
 
     /**
      * 预约认证时的TEMPLATE_CODE
      */
-    public final static String VALIDATE_TEMPLATE_CODE = "SMS_176911792";
+    public final static String VALIDATE_TEMPLATE_CODE = "";
 
     /**
      * 预约成功的TEMPLATE_CODE
      */
-    public final static String NOTICE_TEMPLATE_CODE = "SMS_189028108";
+    public final static String NOTICE_TEMPLATE_CODE = "";
 
     /**
      * 验证码方式的短信
